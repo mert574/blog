@@ -11,7 +11,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   <div class="wrap">
     <p class="kicker">The blog</p>
     <h1>Writing</h1>
-    <p class="lede">Notes on backend, infrastructure, and whatever I'm building.</p>
+    <p class="lede">
+      Notes on backend, infrastructure, and whatever I'm building. The decisions
+      behind things, not step-by-step tutorials.
+    </p>
     <div class="list">
       {
         posts.map((post) => (

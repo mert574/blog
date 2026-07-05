@@ -10,11 +10,17 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 ---
 <Base>
   <section class="intro wrap">
-    <p class="kicker">Software engineer · homelab tinkerer</p>
+    <p class="kicker">Senior software engineer</p>
     <h1>Hi, I'm Mert.</h1>
     <p class="lede">
-      {SITE.tagline} Most of what I build ends up self-hosted on a cluster in my
-      apartment. This is where I write about it and keep a few links.
+      Close to a decade building for the web. I'm strongest in the frontend
+      (React, Vue, TypeScript, Node), and lately I've been doing more backend and
+      real-time systems. I built a PSP emulator down to its MIPS core for fun.
+    </p>
+    <p class="intro-more">
+      Recently I built a low-latency WebRTC calling service using LiveKit. I run
+      a small cluster at home that hosts my own tools and this site. I build a
+      lot with Claude these days and genuinely enjoy it.
     </p>
     <div class="links">
       {SOCIALS.map((s) => <a href={s.href}>{s.label}</a>)}
@@ -60,6 +66,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     font-size: 1.3rem;
     color: var(--ink);
     max-width: 54ch;
+  }
+  .intro-more {
+    color: var(--muted);
+    max-width: 58ch;
   }
   .links {
     display: flex;
