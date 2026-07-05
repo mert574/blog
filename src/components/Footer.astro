@@ -1,11 +1,20 @@
 ---
-import { SITE, SOCIALS } from '../consts';
+import { SITE, SOCIALS, isExternal } from '../consts';
 const year = new Date().getFullYear();
 ---
 <footer class="site-foot wide">
   <div class="links">
-    {SOCIALS.map((s) => <a href={s.href}>{s.label}</a>)}
-    <a href="https://leetcode.com/u/mert574/">LeetCode</a>
+    {
+      SOCIALS.map((s) => (
+        <a
+          href={s.href}
+          {...(isExternal(s.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {s.label}
+        </a>
+      ))
+    }
+    <a href="https://leetcode.com/u/mert574/" target="_blank" rel="noopener noreferrer">LeetCode</a>
     <a href="/rss.xml">RSS</a>
   </div>
   <p class="kicker">© {year} {SITE.author} · Berlin · served from my homelab</p>

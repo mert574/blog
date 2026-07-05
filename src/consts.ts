@@ -1,3 +1,6 @@
+// True for links that leave the site (http/https), so we can open them in a new tab.
+export const isExternal = (href: string) => /^https?:\/\//.test(href);
+
 // Site-wide config. Edit these, not the layouts.
 export const SITE = {
   title: 'Mert Yildiz',
