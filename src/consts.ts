@@ -3,7 +3,7 @@ export const SITE = {
   title: 'Mert Yildiz',
   tagline: 'Software engineer. I build systems and write about them.',
   description:
-    'Personal site and blog of Mert Yildiz — software engineer. Notes on backend, infra, and the things I build.',
+    'Personal site and blog of Mert Yildiz, software engineer. Notes on backend, infra, and the things I build.',
   url: 'https://mert574.dev',
   author: 'Mert Yildiz',
   locale: 'en',

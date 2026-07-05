@@ -1,8 +1,8 @@
 /*
   Editorial / print look. Warm paper + ink, a single terracotta accent, serif
   body for that read-a-magazine feel. Deliberately not a utility-framework site:
-  no blue/purple, no rounded card soup. Two families do the work — Fraunces for
-  display, Newsreader for reading — with JetBrains Mono for metadata + code.
+  no blue/purple, no rounded card soup. Two families do the work: Fraunces for
+  display and Newsreader for reading, with JetBrains Mono for metadata and code.
 */
 
 :root {
@@ -85,7 +85,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* The mono metadata line — uppercase, tracked-out. A recurring editorial motif. */
+/* The mono metadata line: uppercase, tracked-out. A recurring editorial motif. */
 .kicker {
   font-family: var(--font-mono);
   font-size: 0.72rem;

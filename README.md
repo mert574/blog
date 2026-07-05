@@ -7,10 +7,10 @@ object storage on my homelab. Infra lives in
 
 ## Stack
 
-- **Astro 5** — static output, zero JS by default
-- **MDX** — Markdown posts with components when needed
-- **Expressive Code** — build-time syntax highlighting
-- **Pagefind** — client-side full-text search (no server)
+- **Astro 5**: static output, zero JS by default
+- **MDX**: Markdown posts with components when needed
+- **Expressive Code**: build-time syntax highlighting
+- **Pagefind**: client-side full-text search (no server)
 - **RSS** at `/rss.xml`, sitemap, OG tags
 - Editorial theme: Fraunces + Newsreader + JetBrains Mono, self-hosted fonts
 

@@ -1,6 +1,6 @@
 ---
 title: Hello, world
-description: A short first post — what this place is and what I'll write about here.
+description: A short first post about what this place is and what I'll write about here.
 date: 2026-07-01
 tags: [meta]
 ---
@@ -8,7 +8,7 @@ tags: [meta]
 New site, so the obligatory first post.
 
 I'm a software engineer. I spend most of my time on backends and the boring
-plumbing that keeps them up — queues, databases, deploy pipelines, the stuff
+plumbing that keeps them up: queues, databases, deploy pipelines, the stuff
 nobody sees until it breaks. Lately I've been pouring that same energy into a
 homelab, which is basically a tiny production environment I get to break on
 purpose.

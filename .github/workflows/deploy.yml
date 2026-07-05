@@ -2,7 +2,7 @@ name: deploy
 
 # Build the site and push it to the Garage bucket that serves mert574.dev.
 # Runs on the self-hosted homelab runner so it can reach Garage on the LAN
-# (192.168.178.109:3900) — the public S3 endpoint caps upload body size.
+# (192.168.178.109:3900). The public S3 endpoint caps upload body size.
 on:
   push:
     branches: [main]
