@@ -1,0 +1,46 @@
+name: deploy
+
+# Build the site and push it to the Garage bucket that serves mert574.dev.
+# Runs on the self-hosted homelab runner so it can reach Garage on the LAN
+# (192.168.178.109:3900) — the public S3 endpoint caps upload body size.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: homelab-blog
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # astro build + pagefind index (see package.json "build")
+      - run: npm run build
+
+      # The homelab runner image is minimal, so bring our own aws cli.
+      - name: install aws cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: sync to garage
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BLOG_S3_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BLOG_S3_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: 'true'
+        run: |
+          # Garage needs path-style addressing (bucket in the path, not the host).
+          aws configure set default.s3.addressing_style path
+          aws s3 sync dist/ s3://mert574.dev/ \
+            --endpoint-url http://192.168.178.109:3900 \
+            --region eu-central \
+            --delete

@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+<Base title="Writing" description="Posts on backend, infra, and things I build.">
+  <div class="wrap">
+    <p class="kicker">The blog</p>
+    <h1>Writing</h1>
+    <p class="lede">Notes on backend, infrastructure, and whatever I'm building.</p>
+    <div class="list">
+      {
+        posts.map((post) => (
+          <PostCard
+            href={`/blog/${post.id}`}
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            tags={post.data.tags}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  .lede { font-size: 1.2rem; color: var(--muted); }
+  .list { margin-top: var(--gap); }
+</style>

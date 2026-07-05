@@ -1,0 +1,68 @@
+---
+title: Hosting this blog on my homelab
+description: A static Astro site, built by a self-hosted runner and served straight out of Garage object storage. No web server, no database.
+date: 2026-07-05
+tags: [infra, astro, homelab]
+cover: ./cover-homelab.svg
+coverAlt: A diagram of homelab services — k3s, garage, nixos, argo, tofu
+---
+
+This site is a bag of static files sitting in an S3 bucket on a machine in my
+apartment. There is no Node server running it, no database, nothing to patch at
+3am. Here's the whole pipeline.
+
+## The shape of it
+
+I push to `main`. A self-hosted GitHub Actions runner in my cluster wakes up,
+builds the site, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/)
+bucket. Garage serves that bucket as a website, and a Cloudflare tunnel points
+`mert574.dev` at it.
+
+```bash
+# what the runner does, roughly
+npm ci
+npm run build            # astro build + pagefind index
+aws s3 sync dist/ s3://mert574.dev/ \
+  --endpoint-url http://192.168.178.109:3900 \
+  --delete
+```
+
+That's it. The bucket is the deploy target and the web server at the same time.
+
+## Why static
+
+For a personal blog the tradeoff is easy. A static site can't be hacked in the
+usual ways because there's no code running on a request. It's cheap to serve, it
+survives a reboot without me thinking about it, and the "backup" is just the git
+repo plus the bucket.
+
+## Code snippets look right
+
+Syntax highlighting runs at build time with Expressive Code, so there's no
+client-side highlighter shipping to your browser:
+
+```typescript title="src/content.config.ts"
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z.coerce.date(),
+      tags: z.array(z.string()).default([]),
+    }),
+});
+```
+
+## Photos and video just work
+
+Images get optimized into responsive sizes at build. Video I drop in a bucket
+and reference by URL, so a big file never bloats the repo:
+
+<figure>
+  <video controls preload="metadata" width="720">
+    <source src="https://mert574.dev/media/demo.mp4" type="video/mp4" />
+  </video>
+  <figcaption>A clip served from the same Garage instance.</figcaption>
+</figure>
+
+More soon on how the cluster is wired. For now: it works, and it's all in code.

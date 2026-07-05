@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+// Pagefind builds its index into /pagefind at build time (`pagefind --site dist`),
+// so search works on the deployed site and `astro preview`, not in `astro dev`.
+---
+<Base title="Search" description="Full-text search across the writing.">
+  <div class="wrap">
+    <p class="kicker">Full-text · tags · dates</p>
+    <h1>Search</h1>
+    <div id="search"></div>
+    <p class="note kicker">
+      Search runs entirely in your browser — no server, no tracking.
+    </p>
+  </div>
+</Base>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script src="/pagefind/pagefind-ui.js" is:inline></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.PagefindUI) {
+      new window.PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  /* Bend Pagefind's UI to the site palette instead of its default blue. */
+  :root {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--paper);
+    --pagefind-ui-border: var(--rule);
+    --pagefind-ui-tag: var(--paper-raised);
+    --pagefind-ui-border-radius: 3px;
+    --pagefind-ui-font: var(--font-body);
+  }
+</style>
+
+<style>
+  #search { margin-top: var(--gap); }
+  .note { margin-top: 1.2rem; }
+</style>

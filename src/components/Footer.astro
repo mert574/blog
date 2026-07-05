@@ -1,0 +1,30 @@
+---
+import { SITE, SOCIALS } from '../consts';
+const year = new Date().getFullYear();
+---
+<footer class="site-foot wide">
+  <div class="links">
+    {SOCIALS.map((s) => <a href={s.href}>{s.label}</a>)}
+    <a href="/rss.xml">RSS</a>
+  </div>
+  <p class="kicker">© {year} {SITE.author} · served from a homelab</p>
+</footer>
+
+<style>
+  .site-foot {
+    margin-top: var(--gap);
+    padding: 1.6rem 0 2.4rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .links {
+    display: flex;
+    gap: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+</style>
