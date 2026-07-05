@@ -1,56 +1,36 @@
 ---
-import { SITE, NAV } from '../consts';
-import ThemeToggle from './ThemeToggle.astro';
+import { NAV } from '../consts';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
 ---
 <header class="site-head wide">
-  <a class="brand" href="/">{SITE.title}</a>
+  <a class="brand" href="/"><span class="prompt">mert574</span><span class="tilde"> ~ %</span></a>
   <nav aria-label="Primary">
     {
       NAV.map((item) => (
-        <a href={item.href} class:list={['nav-link', { active: isActive(item.href) }]}>
-          {item.label}
+        <a href={item.href} class:list={['nav-link ul', { active: isActive(item.href) }]}>
+          {item.label.toLowerCase()}
         </a>
       ))
     }
   </nav>
-  <ThemeToggle />
 </header>
 
 <style>
   .site-head {
     display: flex;
     align-items: center;
-    gap: 1.4rem;
-    padding: 1.6rem 0 1.2rem;
+    gap: 1.2rem;
+    padding: 1.3rem 0;
     border-bottom: 1px solid var(--rule);
     flex-wrap: wrap;
   }
-  .brand {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.35rem;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    text-decoration: none;
-    margin-right: auto;
-  }
-  .brand:hover { background: none; color: var(--accent); }
-  nav {
-    display: flex;
-    gap: 1.1rem;
-    flex-wrap: wrap;
-  }
-  .nav-link {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    text-decoration: none;
-  }
-  .nav-link:hover { background: none; color: var(--accent); }
-  .nav-link.active { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .brand { font-weight: 700; color: var(--text); text-decoration: none; margin-right: auto; }
+  .brand:hover { text-decoration: none; }
+  .tilde { color: var(--dim); }
+  nav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .nav-link { color: var(--dim); font-size: 13px; }
+  .nav-link:hover { color: var(--accent); }
+  .nav-link.active { color: var(--text); }
 </style>

@@ -1,40 +1,86 @@
 ---
-import { SITE, SOCIALS, isExternal } from '../consts';
+import { SITE, NAV, SOCIALS, isExternal } from '../consts';
 const year = new Date().getFullYear();
+const ext = (href: string) =>
+  isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const elsewhere = [
+  ...SOCIALS,
+  { label: 'LeetCode', href: 'https://leetcode.com/u/mert574/' },
+  { label: 'RSS', href: '/rss.xml' },
+];
 ---
-<footer class="site-foot wide">
-  <div class="links">
-    {
-      SOCIALS.map((s) => (
-        <a
-          href={s.href}
-          {...(isExternal(s.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        >
-          {s.label}
-        </a>
-      ))
-    }
-    <a href="https://leetcode.com/u/mert574/" target="_blank" rel="noopener noreferrer">LeetCode</a>
-    <a href="/rss.xml">RSS</a>
+<footer class="site-foot">
+  <div class="wide">
+    <div class="foot-grid">
+      <div class="identity">
+        <span class="wm">mert574.dev</span>
+        <p class="who">Senior software engineer · Berlin</p>
+      </div>
+
+      <div class="foot-cols">
+        <nav class="col" aria-label="Navigate">
+          <p class="col-h">// navigate</p>
+          <div class="col-links">
+            {NAV.map((item) => <a class="ul" href={item.href}>{item.label}</a>)}
+          </div>
+        </nav>
+
+        <nav class="col" aria-label="Elsewhere">
+          <p class="col-h">// elsewhere</p>
+          <div class="col-links">
+            {elsewhere.map((s) => <a class="ul" href={s.href} {...ext(s.href)}>{s.label}</a>)}
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="bar-inner">
+      <span>© {year} {SITE.author}</span>
+      <span>Served from my homelab</span>
+    </div>
   </div>
-  <p class="kicker">© {year} {SITE.author} · Berlin · served from my homelab</p>
 </footer>
 
 <style>
   .site-foot {
-    margin-top: var(--gap);
-    padding: 1.6rem 0 2.4rem;
-    border-top: 1px solid var(--rule);
+    margin-top: calc(var(--gap) * 2);
+    background: var(--panel);
+  }
+
+  .foot-grid {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 2.4rem 4rem;
+    flex-wrap: wrap;
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(1.8rem, 3vw, 2.4rem);
+  }
+  .foot-cols { display: flex; gap: 3.5rem; }
+  @media (max-width: 480px) {
+    .foot-cols { gap: 2.5rem; }
+  }
+
+  .identity .wm {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .who { margin: 0.8rem 0 0; color: var(--dim); font-size: 13px; }
+
+  .col-h { margin: 0 0 0.7rem; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+  .col-links { display: flex; flex-direction: column; align-items: start; gap: 0.55rem; }
+  .col-links a { color: var(--dim); font-size: 13px; }
+  .col-links a:hover { color: var(--accent); }
+
+  .bar-inner {
+    display: flex;
+    justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-  }
-  .links {
-    display: flex;
-    gap: 1.1rem;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+    padding: 1.2rem 0 2.6rem;
+    border-top: 1px solid var(--rule);
+    color: var(--dim);
+    font-size: 12.5px;
   }
 </style>

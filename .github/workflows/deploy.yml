@@ -2,7 +2,8 @@ name: deploy
 
 # Build the site and push it to the Garage bucket that serves mert574.dev.
 # Runs on the self-hosted homelab runner so it can reach Garage on the LAN
-# (192.168.178.109:3900). The public S3 endpoint caps upload body size.
+# (garage.internal, resolved via pi-hole). The public S3 endpoint caps upload
+# body size.
 on:
   push:
     branches: [main]
@@ -41,6 +42,6 @@ jobs:
           # Garage needs path-style addressing (bucket in the path, not the host).
           aws configure set default.s3.addressing_style path
           aws s3 sync dist/ s3://mert574.dev/ \
-            --endpoint-url http://192.168.178.109:3900 \
+            --endpoint-url http://garage.internal:3900 \
             --region eu-central \
             --delete

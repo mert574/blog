@@ -10,28 +10,39 @@ interface Props {
 const { href, title, description, date, tags } = Astro.props;
 ---
 <article class="post-card">
-  <a class="title" href={href}>{title}</a>
-  <p class="kicker meta">
-    <FormattedDate date={date} />
-    {tags.length > 0 && <span>· {tags.join(' · ')}</span>}
-  </p>
-  <p class="desc">{description}</p>
+  <a class="card-link" href={href}>
+    <span class="title">{title}<span class="arw">→</span></span>
+    <p class="kicker meta">
+      <FormattedDate date={date} />
+      {tags.length > 0 && <span>· {tags.join(' · ')}</span>}
+    </p>
+    <p class="desc">{description}</p>
+  </a>
 </article>
 
 <style>
-  .post-card {
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--rule);
+  .post-card { border-bottom: 1px solid var(--rule); }
+  .card-link {
+    display: block;
+    padding: 1.4rem 0.5rem;
+    position: relative;
+    color: var(--text);
   }
-  .title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 560;
-    line-height: 1.15;
-    color: var(--ink);
-    text-decoration: none;
+  .card-link:hover { text-decoration: none; background: #101216; }
+  .card-link::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: var(--accent); transform: scaleY(0); transform-origin: top;
+    transition: transform 0.3s var(--ease);
   }
-  .title:hover { background: none; color: var(--accent); }
-  .meta { margin: 0.5rem 0 0.4rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .desc { margin: 0; color: var(--muted); }
+  .card-link:hover::before { transform: scaleY(1); }
+  .title { font-weight: 700; font-size: 1.15rem; }
+  .arw {
+    display: inline-block; opacity: 0; margin-left: 0.5ch; color: var(--accent);
+    transform: translateX(-4px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .card-link:hover .arw { opacity: 1; transform: translateX(0); }
+  .meta { margin: 0.4rem 0 0.4rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .desc { margin: 0; color: var(--dim); font-size: 14px; }
 </style>

@@ -4,24 +4,22 @@ description: How this site gets built and served from my own cluster, as a stati
 date: 2026-07-05
 tags: [infra, astro, homelab]
 cover: ./cover-homelab.svg
-coverAlt: 'A diagram of homelab services: k3s, garage, nixos, argo, tofu'
+coverAlt: 'A terminal window showing a git push flowing through the pipeline: the k3s runner syncs to the Garage bucket, which reaches the internet through a Cloudflare tunnel'
 ---
 
-This site is a set of static files in an object storage bucket on a machine in my apartment, served through a Cloudflare tunnel. Here's how it fits together and why I set it up this way.
+This site is a set of static files in an object storage bucket on a machine at home, served through a Cloudflare tunnel. Here's how it fits together and why I set it up this way.
 
 ## The pipeline
 
 I push to `main`. A GitHub Actions runner on my own cluster picks up the job, builds the site with Astro, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/) bucket. Garage serves that bucket as a website, and the tunnel points `mert574.dev` at it.
 
 ```bash
-npm ci
-npm run build            # astro build + pagefind index
 aws s3 sync dist/ s3://mert574.dev/ \
-  --endpoint-url http://192.168.178.109:3900 \
+  --endpoint-url http://garage.internal:3900 \
   --delete
 ```
 
-The bucket is both the deploy target and the web server. Nothing runs per request, so there's less to keep patched and it comes back on its own after a reboot.
+The bucket is both the deploy target and the web server. A deploy like this isn't atomic: `sync` uploads one file at a time, so someone loading the site mid-deploy could get HTML that points at an asset that isn't up yet. But the whole upload takes a couple of seconds and Astro hashes the asset filenames anyway, so I've decided not to care. If it ever matters, the fix is to upload each build under its own prefix and switch over at the end.
 
 ## Why the runner runs at home
 
@@ -33,4 +31,4 @@ I didn't want a server to babysit. A static build in a bucket is cheap to serve 
 
 ## What's still rough
 
-The Kubernetes side of the cluster is already GitOps through Argo CD, but the NixOS hosts still need a manual apply when I change their config. Closing that gap, so host changes roll out on their own, is the next thing I want to sort out.
+The Kubernetes side of the cluster is already GitOps through Argo CD, but the NixOS hosts still need a manual apply when I change their config. Closing that gap is the next thing I want to sort out.

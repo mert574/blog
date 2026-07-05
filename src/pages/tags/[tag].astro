@@ -21,6 +21,7 @@ const { tag, posts } = Astro.props;
 ---
 <Base title={`#${tag}`} description={`Posts tagged ${tag}.`}>
   <div class="wrap">
+    <p class="cmd"><span class="prompt">$</span> grep -l '#{tag}'</p>
     <h1>#{tag}</h1>
     <div class="list">
       {

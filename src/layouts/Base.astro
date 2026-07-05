@@ -1,6 +1,4 @@
 ---
-import '@fontsource-variable/fraunces';
-import '@fontsource-variable/newsreader';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -18,7 +16,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url);
 const ogImage = image ? new URL(image, SITE.url) : undefined;
 ---
 <!doctype html>
-<html lang={SITE.locale}>
+<html lang={SITE.locale} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,23 +32,10 @@ const ogImage = image ? new URL(image, SITE.url) : undefined;
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="generator" content={Astro.generator} />
-    <!-- Keep the page content hidden until the web fonts are ready, so text
-         doesn't paint in a fallback and then reflow when the real font swaps in.
-         The page background (on <html>) still shows, so it's not a blank flash. -->
-    <style is:inline>
-      .fonts-loading body { visibility: hidden; }
-    </style>
+    <!-- Hide content until the font is ready so text doesn't reflow when it swaps in. -->
+    <style is:inline>.fonts-loading body { visibility: hidden; }</style>
     <script is:inline>
-      // Set the theme before paint to avoid a flash of the wrong palette.
-      const saved = localStorage.getItem('theme');
-      const theme =
-        saved ??
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       const de = document.documentElement;
-      de.dataset.theme = theme;
-
-      // Hide content until fonts load; reveal on ready, with a safety timeout so
-      // a slow or failed font never keeps the page blank.
       de.classList.add('fonts-loading');
       const reveal = () => de.classList.remove('fonts-loading');
       if (document.fonts && document.fonts.ready) {
@@ -62,11 +47,23 @@ const ogImage = image ? new URL(image, SITE.url) : undefined;
     </script>
   </head>
   <body>
+    <div id="prog"></div>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // scroll progress hairline
+      const prog = document.getElementById('prog');
+      const onScroll = () => {
+        const h = document.documentElement;
+        const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+        prog.style.width = p * 100 + '%';
+      };
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
     <script data-collect-dnt="true" async is:inline src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   </body>
 </html>

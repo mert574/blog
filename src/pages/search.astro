@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Search" description="Full-text search across the writing.">
   <div class="wrap">
+    <p class="cmd"><span class="prompt">$</span> grep -r</p>
     <h1>Search</h1>
     <div id="search"></div>
   </div>
@@ -28,12 +29,12 @@ import Base from '../layouts/Base.astro';
   /* Bend Pagefind's UI to the site palette instead of its default blue. */
   :root {
     --pagefind-ui-primary: var(--accent);
-    --pagefind-ui-text: var(--ink);
-    --pagefind-ui-background: var(--paper);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--panel);
     --pagefind-ui-border: var(--rule);
-    --pagefind-ui-tag: var(--paper-raised);
+    --pagefind-ui-tag: var(--bg);
     --pagefind-ui-border-radius: 3px;
-    --pagefind-ui-font: var(--font-body);
+    --pagefind-ui-font: var(--font-mono);
   }
 </style>
 

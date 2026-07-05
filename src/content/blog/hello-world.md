@@ -7,10 +7,10 @@ tags: [meta]
 
 I've wanted a place to write for a while. Not really for an audience, mostly for me.
 
-Writing forces me to actually understand something instead of half-getting it and moving on. If I can explain a decision in a few paragraphs, I probably understood it. If I can't, I didn't. This is where I'll do that.
+Writing forces me to actually understand something instead of half-getting it and moving on. If I can explain a decision in a few paragraphs, I probably understood it. This is where I work that out.
 
 It's also a timeline. In a year I want to look back and see what I was working on and how I was thinking about it at the time.
 
-Most of what I write will be technical, from frontend down to the infra I self-host. I'll focus on the concepts and the decisions I made, not the step-by-step. The exact commands you can look up. The reasoning is the part worth keeping.
+Most of what I write will be technical, from frontend down to the infra I self-host. I'll focus on the reasoning behind decisions, not step-by-step commands you can look up anywhere.
 
 I like to keep things short, so that's the plan.

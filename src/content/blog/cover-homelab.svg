@@ -1,19 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#1c1a15"/>
-  <g stroke="#bb4423" stroke-width="2" fill="none" opacity="0.9">
-    <rect x="120" y="150" width="220" height="140" rx="6"/>
-    <rect x="490" y="150" width="220" height="140" rx="6"/>
-    <rect x="860" y="150" width="220" height="140" rx="6"/>
-    <rect x="305" y="360" width="220" height="140" rx="6"/>
-    <rect x="675" y="360" width="220" height="140" rx="6"/>
-    <path d="M230 290 V325 H415 V360 M600 290 V360 M970 290 V325 H785 V360"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace">
+  <rect width="1200" height="630" fill="#0c0d10"/>
+
+  <!-- terminal window -->
+  <rect x="120" y="95" width="960" height="440" rx="10" fill="#111318" stroke="#20232b" stroke-width="1.5"/>
+  <line x1="120" y1="145" x2="1080" y2="145" stroke="#20232b" stroke-width="1.5"/>
+  <g fill="#474b52">
+    <circle cx="152" cy="120" r="6"/>
+    <circle cx="176" cy="120" r="6"/>
+    <circle cx="200" cy="120" r="6"/>
   </g>
-  <g fill="#f4f1ea" font-family="monospace" font-size="20" opacity="0.85">
-    <text x="145" y="230">k3s</text>
-    <text x="515" y="230">garage</text>
-    <text x="885" y="230">nixos</text>
-    <text x="330" y="440">argo</text>
-    <text x="700" y="440">tofu</text>
+  <text x="600" y="126" fill="#7c8088" font-size="18" text-anchor="middle" letter-spacing="1">deploy — mert574.dev</text>
+
+  <!-- the push -->
+  <text x="160" y="198" font-size="22"><tspan fill="#7ee787">~/blog</tspan><tspan fill="#7c8088"> $ </tspan><tspan fill="#ffb454">git push</tspan><tspan fill="#d7d8d0"> origin main</tspan></text>
+
+  <!-- elbow from the command down into the runner -->
+  <path d="M262 212 V240" stroke="#474b52" stroke-width="2" fill="none"/>
+  <path d="M256 238 L262 250 L268 238 Z" fill="#474b52"/>
+
+  <!-- runner box -->
+  <rect x="160" y="255" width="200" height="110" rx="6" fill="none" stroke="#7c8088" stroke-width="2"/>
+  <text x="260" y="302" font-size="22" fill="#d7d8d0" text-anchor="middle">runner</text>
+  <text x="260" y="334" font-size="17" fill="#7c8088" text-anchor="middle">ci on k3s</text>
+
+  <!-- arrow: runner -> garage -->
+  <line x1="360" y1="310" x2="455" y2="310" stroke="#7c8088" stroke-width="2"/>
+  <path d="M453 303 L468 310 L453 317 Z" fill="#7c8088"/>
+  <text x="414" y="292" font-size="15" fill="#7c8088" text-anchor="middle">sync</text>
+  <rect y="305" width="9" height="9" rx="1.5" fill="#ffb454" opacity="0">
+    <animate attributeName="x" values="362;445" dur="2.2s" repeatCount="2"/>
+    <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" repeatCount="2" fill="freeze"/>
+  </rect>
+
+  <!-- garage box -->
+  <rect x="470" y="255" width="200" height="110" rx="6" fill="none" stroke="#7c8088" stroke-width="2"/>
+  <text x="570" y="302" font-size="22" fill="#d7d8d0" text-anchor="middle">garage</text>
+  <text x="570" y="334" font-size="17" fill="#7c8088" text-anchor="middle">s3 bucket</text>
+
+  <!-- cloudflare tunnel: dashed tube -->
+  <line x1="670" y1="285" x2="895" y2="285" stroke="#474b52" stroke-width="2" stroke-dasharray="7 7"/>
+  <line x1="670" y1="335" x2="895" y2="335" stroke="#474b52" stroke-width="2" stroke-dasharray="7 7"/>
+  <line x1="678" y1="310" x2="880" y2="310" stroke="#7c8088" stroke-width="2"/>
+  <path d="M878 303 L893 310 L878 317 Z" fill="#7c8088"/>
+  <text x="782" y="372" font-size="15" fill="#7c8088" text-anchor="middle">cloudflare tunnel</text>
+  <rect y="305" width="9" height="9" rx="1.5" fill="#ffb454" opacity="0">
+    <animate attributeName="x" values="678;870" dur="2.2s" begin="1.1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" begin="1.1s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- the world -->
+  <g stroke="#ffb454" stroke-width="2" fill="none">
+    <circle cx="965" cy="310" r="46"/>
+    <ellipse cx="965" cy="310" rx="19" ry="46"/>
+    <line x1="919" y1="310" x2="1011" y2="310"/>
+    <path d="M927 285 Q965 300 1003 285"/>
+    <path d="M927 335 Q965 320 1003 335"/>
   </g>
-  <text x="120" y="90" fill="#e0724a" font-family="monospace" font-size="26" letter-spacing="6">HOMELAB-CORE</text>
+  <text x="965" y="392" font-size="17" fill="#ffb454" text-anchor="middle">mert574.dev</text>
+
+  <!-- outcome + resting prompt -->
+  <text x="160" y="448" font-size="22" opacity="0"><tspan fill="#7ee787">✓</tspan><tspan fill="#d7d8d0"> deployed in 2.1s</tspan><animate attributeName="opacity" values="0;1" dur="0.3s" begin="5.5s" fill="freeze"/></text>
+  <text x="160" y="496" font-size="22"><tspan fill="#7ee787">~/blog</tspan><tspan fill="#7c8088"> $ </tspan></text>
+  <rect x="288" y="478" width="13" height="24" fill="#ffb454">
+    <animate attributeName="opacity" values="1;1;0;0" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
 </svg>

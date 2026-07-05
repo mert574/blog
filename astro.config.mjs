@@ -9,11 +9,12 @@ export default defineConfig({
   // Expressive Code must come before mdx so it also styles code in .mdx files.
   integrations: [
     expressiveCode({
-      themes: ['github-light', 'github-dark'],
-      // Follow the site's own light/dark toggle instead of picking one theme.
-      themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+      // Dark-only site, so a single dark theme tuned to the terminal palette.
+      themes: ['github-dark'],
       styleOverrides: {
         borderRadius: '4px',
+        borderColor: '#20232b',
+        codeBackground: '#0e1014',
         codeFontFamily: "'JetBrains Mono Variable', ui-monospace, monospace",
         uiFontFamily: "'JetBrains Mono Variable', ui-monospace, monospace",
       },
