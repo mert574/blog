@@ -15,8 +15,7 @@ export const SITE = {
 // Top nav. Keep it short.
 export const NAV = [
   { label: 'Home', href: '/' },
-  { label: 'Writing', href: '/blog' },
-  { label: 'Tags', href: '/tags' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Search', href: '/search' },
 ];
 
