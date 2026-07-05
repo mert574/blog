@@ -33,7 +33,7 @@ export const PROJECTS = [
     name: 'PSP.js',
     blurb:
       'A PlayStation Portable emulator in TypeScript, running in the browser. HLE, so no BIOS: it reimplements PSP syscalls, runs the MIPS Allegrex CPU and VFPU, renders the GE over WebGL, and decodes ATRAC3+/PSMF. Boots real commercial games.',
-    href: 'https://github.com/mert574/psp-js',
+    href: 'https://mert.js.org/psp-js/docs/',
     tag: 'emulator',
   },
   {
