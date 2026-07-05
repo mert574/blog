@@ -4,9 +4,9 @@ export const isExternal = (href: string) => /^https?:\/\//.test(href);
 // Site-wide config. Edit these, not the layouts.
 export const SITE = {
   title: 'Mert Yildiz',
-  tagline: 'Software engineer. Mostly frontend, plus backend and infra.',
+  tagline: 'Senior software engineer. Mostly frontend, plus backend and infra.',
   description:
-    'Mert Yildiz, a software engineer in Berlin. Mostly frontend, plus backend, infra, and the things I build and self-host.',
+    'Mert Yildiz, a senior software engineer in Berlin. Mostly frontend, plus distributed systems, cloud infrastructure, and the things I build and self-host.',
   url: 'https://mert574.dev',
   author: 'Mert Yildiz',
   locale: 'en',
@@ -31,29 +31,33 @@ export const SOCIALS = [
 export const PROJECTS = [
   {
     name: 'PSP.js',
-    blurb:
-      'A PlayStation Portable emulator in TypeScript, running in the browser. HLE, so no BIOS: it reimplements PSP syscalls, runs the MIPS Allegrex CPU and VFPU, renders the GE over WebGL, and decodes ATRAC3+/PSMF. Boots real commercial games.',
+    blurb: [
+      'A PSP emulator in TypeScript that boots real commercial games in the browser, rendering over WebGL.',
+    ],
     href: 'https://mert.js.org/psp-js/docs/',
     tag: 'emulator',
   },
   {
     name: 'Pulse Pager',
-    blurb:
-      'A multi-tenant uptime monitoring SaaS, built end to end in Go: five services talking over Kafka, checks from multiple regions, Postgres row-level security per org, a contract-first OpenAPI spec that generates both server and client types, and a Lit SPA.',
+    blurb: [
+      'A multi-tenant uptime monitoring service in Go: five services over Kafka, multi-region checks.',
+    ],
     href: 'https://pulsepager.com',
     tag: 'product',
   },
   {
     name: 'M2D Engine',
-    blurb:
-      'A small 2D game engine in JavaScript: Matter.js physics, a double-buffered Canvas renderer, a component-based entity system, scenes, camera, and a UI layer.',
+    blurb: [
+      'A full 2D game engine in JavaScript: physics, entities, scenes, and a pluggable renderer.',
+    ],
     href: 'https://github.com/mert574/m2d-engine',
     tag: 'engine',
   },
   {
     name: 'Homelab',
-    blurb:
-      'A self-hosted cluster on Proxmox and k3s, all in code: NixOS, OpenTofu, Argo CD, Garage object storage. Hosts Pi-hole, a media server, a password manager, and this site.',
+    blurb: [
+      'A self-hosted Kubernetes (k3s) cluster on Proxmox, all in code with NixOS; hosts Pi-hole, a media server, and this site.',
+    ],
     href: 'https://github.com/mert574/homelab-core',
     tag: 'infra',
   },
