@@ -39,7 +39,7 @@ export const PROJECTS = [
   {
     name: 'Pulse Pager',
     blurb:
-      'A SaaS I built end to end: API, background workers, billing, and an SPA served from object storage.',
+      'A multi-tenant uptime monitoring SaaS, built end to end in Go: five services talking over Kafka, checks from multiple regions, Postgres row-level security per org, a contract-first OpenAPI spec that generates both server and client types, and a Lit SPA.',
     href: 'https://pulsepager.com',
     tag: 'product',
   },
