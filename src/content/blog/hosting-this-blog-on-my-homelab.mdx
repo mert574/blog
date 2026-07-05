@@ -1,25 +1,19 @@
 ---
 title: Hosting this blog on my homelab
-description: A static Astro site, built by a self-hosted runner and served straight out of Garage object storage. No web server, no database.
+description: How this site gets built and served from my own cluster, as a static Astro build in object storage.
 date: 2026-07-05
 tags: [infra, astro, homelab]
 cover: ./cover-homelab.svg
 coverAlt: 'A diagram of homelab services: k3s, garage, nixos, argo, tofu'
 ---
 
-This site is a bag of static files sitting in an S3 bucket on a machine in my
-apartment. There is no Node server running it, no database, nothing to patch at
-3am. Here's the whole pipeline.
+This site is a set of static files in an object storage bucket on a machine in my apartment, served through a Cloudflare tunnel. Here's how it fits together and why I set it up this way.
 
-## The shape of it
+## The pipeline
 
-I push to `main`. A self-hosted GitHub Actions runner in my cluster wakes up,
-builds the site, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/)
-bucket. Garage serves that bucket as a website, and a Cloudflare tunnel points
-`mert574.dev` at it.
+I push to `main`. A GitHub Actions runner on my own cluster picks up the job, builds the site with Astro, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/) bucket. Garage serves that bucket as a website, and the tunnel points `mert574.dev` at it.
 
 ```bash
-# what the runner does, roughly
 npm ci
 npm run build            # astro build + pagefind index
 aws s3 sync dist/ s3://mert574.dev/ \
@@ -27,47 +21,16 @@ aws s3 sync dist/ s3://mert574.dev/ \
   --delete
 ```
 
-That's it. The bucket is the deploy target and the web server at the same time.
+The bucket is both the deploy target and the web server. Nothing runs per request, so there's less to keep patched and it comes back on its own after a reboot.
 
-## Why static
+## Why the runner runs at home
 
-For a personal blog the tradeoff is easy. A static site can't be hacked in the
-usual ways because there's no code running on a request. It's cheap to serve, it
-survives a reboot without me thinking about it, and the "backup" is just the git
-repo plus the bucket.
+Garage sits on my LAN, and the runner needs to reach it to push the build. I could expose the S3 endpoint through the tunnel, but Cloudflare's proxy caps request body size on the free plan, which breaks larger uploads. Running the job on a runner that's already on the LAN skips that problem, and I don't expose anything extra to do it.
 
-## Code snippets look right
+## Why object storage
 
-Syntax highlighting runs at build time with Expressive Code, so there's no
-client-side highlighter shipping to your browser:
+I didn't want a server to babysit. A static build in a bucket is cheap to serve and easy to reason about, and the backup is just the git repo plus whatever's in the bucket. Garage gives me S3-compatible storage and static website hosting in the same box, which is the whole job.
 
-```typescript title="src/content.config.ts"
-const blog = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      date: z.coerce.date(),
-      tags: z.array(z.string()).default([]),
-    }),
-});
-```
+## What's still rough
 
-## Photos and video just work
-
-Images get optimized into responsive sizes at build (modern formats, `srcset`),
-so I just drop one next to the post and reference it:
-
-![A geometric composition in the site palette](./photo-optimized.jpg)
-
-Video I keep in the repo under `public/` and reference by path, so it deploys
-with the site and streams from the same Garage bucket:
-
-<figure>
-  <video controls preload="metadata" width="720">
-    <source src="/media/demo.mp4" type="video/mp4" />
-  </video>
-  <figcaption>A short clip, served from the same Garage instance.</figcaption>
-</figure>
-
-More soon on how the cluster is wired. For now: it works, and it's all in code.
+The Kubernetes side of the cluster is already GitOps through Argo CD, but the NixOS hosts still need a manual apply when I change their config. Closing that gap, so host changes roll out on their own, is the next thing I want to sort out.

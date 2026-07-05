@@ -34,13 +34,31 @@ const ogImage = image ? new URL(image, SITE.url) : undefined;
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="generator" content={Astro.generator} />
-    <!-- Set theme before paint to avoid a flash of the wrong palette. -->
+    <!-- Keep the page content hidden until the web fonts are ready, so text
+         doesn't paint in a fallback and then reflow when the real font swaps in.
+         The page background (on <html>) still shows, so it's not a blank flash. -->
+    <style is:inline>
+      .fonts-loading body { visibility: hidden; }
+    </style>
     <script is:inline>
+      // Set the theme before paint to avoid a flash of the wrong palette.
       const saved = localStorage.getItem('theme');
       const theme =
         saved ??
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.dataset.theme = theme;
+      const de = document.documentElement;
+      de.dataset.theme = theme;
+
+      // Hide content until fonts load; reveal on ready, with a safety timeout so
+      // a slow or failed font never keeps the page blank.
+      de.classList.add('fonts-loading');
+      const reveal = () => de.classList.remove('fonts-loading');
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(reveal);
+      } else {
+        reveal();
+      }
+      setTimeout(reveal, 1500);
     </script>
   </head>
   <body>
@@ -49,5 +67,6 @@ const ogImage = image ? new URL(image, SITE.url) : undefined;
       <slot />
     </main>
     <Footer />
+    <script data-collect-dnt="true" async is:inline src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   </body>
 </html>

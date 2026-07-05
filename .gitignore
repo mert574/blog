@@ -13,3 +13,6 @@ public/pagefind/
 .env.production
 .DS_Store
 *.log
+
+# local design mockups, not part of the site
+design-demos/
