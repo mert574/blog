@@ -143,6 +143,16 @@ figcaption {
   margin-inline: auto;
 }
 
+/* Consistent breathing room under the header, and don't let the first heading on
+   a page stack its own big top margin on top of it. */
+main {
+  padding-top: var(--gap);
+}
+.wrap > :first-child,
+.wide > :first-child {
+  margin-top: 0;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
