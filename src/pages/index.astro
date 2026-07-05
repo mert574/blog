@@ -9,7 +9,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 const pad = (n: number) => String(n).padStart(2, '0');
 const ext = (href: string) =>
-  isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+  isExternal(href) ? { target: '_blank', rel: 'noopener' } : {};
 ---
 <Base>
   <section class="intro wrap">
@@ -22,9 +22,11 @@ const ext = (href: string) =>
     </p>
     <p>
       For fun, I built a
-      <a class="ul" href="https://mert.js.org/psp-js/docs/" target="_blank" rel="noopener noreferrer">PSP emulator</a>
-      that runs real games. I run a small Kubernetes cluster at home to learn
-      infrastructure hands-on; it hosts my own tools and this site.
+      <a class="ul" href="https://mert.js.org/psp-js/docs/" target="_blank" rel="noopener">PSP emulator</a>
+      that runs real games, and
+      <a class="ul" href="https://pulsepager.com" target="_blank" rel="noopener">Pulse Pager</a>,
+      an uptime monitoring product I built to learn cloud infrastructure and
+      Kubernetes hands-on.
     </p>
     <p>
       Day to day I write TypeScript (React, Vue, Node), some Kotlin at work and Go

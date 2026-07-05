@@ -2,7 +2,7 @@
 import { SITE, NAV, SOCIALS, isExternal } from '../consts';
 const year = new Date().getFullYear();
 const ext = (href: string) =>
-  isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+  isExternal(href) ? { target: '_blank', rel: 'noopener' } : {};
 const elsewhere = [
   ...SOCIALS,
   { label: 'LeetCode', href: 'https://leetcode.com/u/mert574/' },
