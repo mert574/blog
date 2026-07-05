@@ -2,8 +2,8 @@ name: deploy
 
 # Build the site and push it to the Garage bucket that serves mert574.dev.
 # Runs on the self-hosted homelab runner so it can reach Garage on the LAN
-# (garage.internal, resolved via pi-hole). The public S3 endpoint caps upload
-# body size.
+# (garage.internal, resolved via pi-hole) without exposing the S3 API to the
+# internet. Bonus: no Cloudflare upload body-size cap to worry about.
 on:
   push:
     branches: [main]

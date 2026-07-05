@@ -11,7 +11,7 @@ This site is a set of static files in an object storage bucket on a machine at h
 
 ## The pipeline
 
-I push to `main`. A GitHub Actions runner on my own cluster picks up the job, builds the site with Astro, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/) bucket. Garage serves that bucket as a website, and the tunnel points `mert574.dev` at it.
+I push to `main`. A GitHub Actions runner on my k3s cluster picks up the job, builds the site with Astro, and syncs the output to a [Garage](https://garagehq.deuxfleurs.fr/) bucket. Garage serves that bucket as a website, and the tunnel points `mert574.dev` at it.
 
 ```bash
 aws s3 sync dist/ s3://mert574.dev/ \
@@ -23,7 +23,7 @@ The bucket is both the deploy target and the web server. A deploy like this isn'
 
 ## Why the runner runs at home
 
-Garage sits on my LAN, and the runner needs to reach it to push the build. I could expose the S3 endpoint through the tunnel, but Cloudflare's proxy caps request body size on the free plan, which breaks larger uploads. Running the job on a runner that's already on the LAN skips that problem, and I don't expose anything extra to do it.
+Garage runs in its own container on the Proxmox host, outside k3s, and is only reachable from inside the network, so the runner has to be inside too if it wants to push the build. I could route the S3 endpoint through the tunnel, but then a whole storage API sits on the internet so that one deploy job can upload files. I'd rather not. A runner that's already on the LAN gets me the same thing with nothing exposed. (It also sidesteps Cloudflare's upload body-size cap on the free plan.)
 
 ## Why object storage
 
