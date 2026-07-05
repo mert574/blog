@@ -55,14 +55,19 @@ const blog = defineCollection({
 
 ## Photos and video just work
 
-Images get optimized into responsive sizes at build. Video I drop in a bucket
-and reference by URL, so a big file never bloats the repo:
+Images get optimized into responsive sizes at build (modern formats, `srcset`),
+so I just drop one next to the post and reference it:
+
+![A geometric composition in the site palette](./photo-optimized.jpg)
+
+Video I keep in the repo under `public/` and reference by path, so it deploys
+with the site and streams from the same Garage bucket:
 
 <figure>
   <video controls preload="metadata" width="720">
-    <source src="https://mert574.dev/media/demo.mp4" type="video/mp4" />
+    <source src="/media/demo.mp4" type="video/mp4" />
   </video>
-  <figcaption>A clip served from the same Garage instance.</figcaption>
+  <figcaption>A short clip, served from the same Garage instance.</figcaption>
 </figure>
 
 More soon on how the cluster is wired. For now: it works, and it's all in code.
