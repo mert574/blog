@@ -15,7 +15,6 @@
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
-    "@fontsource-variable/newsreader": "^5.1.1",
     "@iconify-json/lucide": "^1.2.116",
     "astro": "^5.2.0",
     "astro-expressive-code": "^0.40.2",

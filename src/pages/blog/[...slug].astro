@@ -1,6 +1,4 @@
 ---
-import '@fontsource-variable/newsreader';
-import '@fontsource-variable/newsreader/wght-italic.css';
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
@@ -53,28 +51,20 @@ const { title, description, date, updated, tags, cover, coverAlt } = post.data;
 </Base>
 
 <style>
-  /* Post title and section headings read in the prose serif, not the mono. */
-  .post h1,
-  .prose :global(h2),
-  .prose :global(h3),
-  .prose :global(h4) {
-    font-family: 'Newsreader Variable', Georgia, serif;
-    word-spacing: normal;
-    letter-spacing: 0;
-  }
   .meta { display: flex; gap: 0.4rem; }
   .lede { font-size: 1.1rem; color: var(--dim); margin-top: 0.4rem; }
   .tags { display: flex; gap: 0.9rem; flex-wrap: wrap; }
   .tag { color: var(--accent); text-decoration: none; }
+  /* the whole post is one centered 600px column: title, cover, prose alike */
+  .post { --measure: 600px; }
   .cover { margin: var(--gap) 0; }
-  /* Prose reads in a serif; the terminal chrome (headings, code, meta) stays mono. */
   .prose {
-    font-family: 'Newsreader Variable', Georgia, serif;
-    font-size: 1.2rem;
-    line-height: 1.55;
-    max-width: 62ch;
+    font-size: 1.05rem;
+    line-height: 1.65;
   }
   .prose :global(h2) { margin-top: 2.4rem; }
+  .prose :global(h2), .prose :global(h3), .prose :global(h4) { margin-bottom: 0.9rem; }
+  .post h1 { margin-bottom: 0.5rem; }
   /* Space the whole Expressive Code frame; let EC style its own <pre> (touching
      the inner pre adds a gap between the window bar and the code). */
   .prose :global(.expressive-code) { margin: 1.4rem 0; }
