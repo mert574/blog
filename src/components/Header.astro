@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { NAV } from '../consts';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -14,8 +15,21 @@ const isActive = (href: string) =>
         </a>
       ))
     }
+    <button id="theme-toggle" class="nav-link" type="button" aria-label="Toggle color scheme">
+      <span class="when-dark"><Icon name="lucide:sun" /></span>
+      <span class="when-light"><Icon name="lucide:moon" /></span>
+    </button>
   </nav>
 </header>
+
+<script is:inline>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const de = document.documentElement;
+    const next = de.dataset.theme === 'light' ? 'dark' : 'light';
+    de.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>
 
 <style>
   .site-head {
@@ -30,7 +44,20 @@ const isActive = (href: string) =>
   .brand:hover { text-decoration: none; }
   .tilde { color: var(--dim); }
   nav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-  .nav-link { color: var(--dim); font-size: 13px; }
+  /* padding + negative margin: bigger touch targets without shifting the layout */
+  .nav-link { color: var(--dim); font-size: 13px; padding: 0.5rem 0.25rem; margin: -0.5rem -0.25rem; }
   .nav-link:hover { color: var(--accent); }
   .nav-link.active { color: var(--text); }
+
+  #theme-toggle {
+    background: none; border: none; cursor: pointer;
+    color: var(--dim); display: flex; align-items: center;
+  }
+  #theme-toggle:hover { color: var(--accent); }
+  #theme-toggle svg { width: 15px; height: 15px; }
+  /* show the theme you'd switch to */
+  .when-light { display: none; }
+  .when-dark { display: flex; }
+  :global([data-theme='light']) .when-light { display: flex; }
+  :global([data-theme='light']) .when-dark { display: none; }
 </style>

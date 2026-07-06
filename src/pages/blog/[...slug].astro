@@ -15,7 +15,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const { title, description, date, updated, tags, cover, coverAlt } = post.data;
 ---
-<Base title={title} description={description} image={cover?.src}>
+<Base title={title} description={description} image={cover?.src} progress>
   <article class="wrap post">
     <header>
       <p class="cmd"><span class="prompt">$</span> cat {post.id}.md</p>

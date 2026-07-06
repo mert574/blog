@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
+import icon from 'astro-icon';
 
 // https://astro.build
 export default defineConfig({
@@ -9,17 +10,18 @@ export default defineConfig({
   // Expressive Code must come before mdx so it also styles code in .mdx files.
   integrations: [
     expressiveCode({
-      // Dark-only site, so a single dark theme tuned to the terminal palette.
-      themes: ['github-dark'],
+      // One theme per scheme, switched by the data-theme attribute Base sets.
+      themes: ['github-dark', 'github-light'],
+      themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+      useDarkModeMediaQuery: false,
       styleOverrides: {
         borderRadius: '4px',
-        borderColor: '#20232b',
-        codeBackground: '#0e1014',
-        codeFontFamily: "'JetBrains Mono Variable', ui-monospace, monospace",
-        uiFontFamily: "'JetBrains Mono Variable', ui-monospace, monospace",
+        codeFontFamily: "'Geist Mono Variable', ui-monospace, monospace",
+        uiFontFamily: "'Geist Mono Variable', ui-monospace, monospace",
       },
     }),
     mdx(),
     sitemap(),
+    icon(),
   ],
 });
